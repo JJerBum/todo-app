@@ -23,6 +23,21 @@ func main() {
 
 	t := models.NewTodo("Show thie on the window")
 
+	newtodoDescTxt := widget.NewEntry()
+	newtodoDescTxt.PlaceHolder = "New Todo Description..."
+	addBtn := widget.NewButton("Add", func() { fmt.Println("add buttom was cliked") })
+	addBtn.Disable()
+
+	newtodoDescTxt.OnChanged = func(s string) {
+		addBtn.Disable()
+
+		if len(s) >= 3 {
+			addBtn.Enable()
+		}
+
+		fmt.Println("hi")
+	}
+
 	// window에 content와 label을 지정해 줍니다.
 	w.SetContent(
 		container.NewBorder(
@@ -33,9 +48,9 @@ func main() {
 				nil, // BOTTOM
 				nil, // Left
 				// RIGHT ↓
-				widget.NewButton("Add", func() { fmt.Println("Add was clicked!") }),
+				addBtn,
 				// take the rest of the space
-				widget.NewEntry(),
+				newtodoDescTxt,
 			),
 
 			nil, // Right
